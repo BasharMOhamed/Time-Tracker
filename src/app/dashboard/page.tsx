@@ -1,15 +1,15 @@
 "use client";
 import Timer from "@/components/Timer";
 import React, { useState } from "react";
-import type { Metadata } from "next";
+// import type { Metadata } from "next";
 import { DataTableDemo } from "../projects/data-table";
 // import StatsCard from "@/components/statsCard";
 import RemainingCard from "@/components/RemainingCard";
 
-const metadata: Metadata = {
-  title: "Dashboard - Time Tracker",
-  description: "Time logging dashboard for tracking project hours",
-};
+// const metadata: Metadata = {
+//   title: "Dashboard - Time Tracker",
+//   description: "Time logging dashboard for tracking project hours",
+// };
 
 const Dashboard = () => {
   const [isRunning, setIsRunning] = useState(false);
