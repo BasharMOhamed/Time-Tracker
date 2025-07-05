@@ -1,8 +1,7 @@
 import { SelectDemo } from "@/components/projectSelect";
+import StatsCard from "@/components/statsCard";
 import DateRangePicker from "@/components/ui/date-range-picker";
 import Example from "@/components/weeklyHoursChart";
-// import WeeklyHoursChart from "@/components/weeklyHoursChart";
-// import { DateRangePicker } from "@/components/ui/date-range-picker";
 import React from "react";
 
 const Reports = () => {
@@ -11,7 +10,7 @@ const Reports = () => {
       <header>
         <h1 className="text-3xl mb-6 text-black">Reports</h1>
       </header>
-      <div className="bg-white p-6 rounded-lg">
+      <div className="p-6 rounded-lg">
         <div className="flex w-full gap-x-10 mb-4">
           <div className="flex-1">
             <DateRangePicker />
@@ -20,13 +19,25 @@ const Reports = () => {
             <SelectDemo />
           </div>
         </div>
-        {/* Add your reports content here */}
-        {/* <WeeklyHoursChart /> */}
-        <div className="w-full rounded-lg shadow-lg p-6">
-          <h2 className="text-2xl mb-4">Weekly Report</h2>
+        <div
+          className="w-full rounded-lg shadow-sm border border-gray-200 bg-white p-6"
+          style={{ fontFamily: "Inter, system-ui, sans-serif" }}
+        >
+          <h2 className="text-2xl font-semibold mb-4 text-gray-900">
+            Hours Tracked
+          </h2>
           <Example />
         </div>
-        <div className="flex w-full gap-x-10 mb-4"></div>
+        <div className="w-full grid grid-cols-2 gap-x-10 my-4">
+          <StatsCard
+            title="34 h 15 m"
+            description="Total time during the week"
+          />
+          <StatsCard
+            title="Most active project"
+            description="Marketing Campaign"
+          />
+        </div>
       </div>
     </>
   );
