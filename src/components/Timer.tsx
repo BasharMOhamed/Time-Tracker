@@ -2,11 +2,11 @@
 import React, { useState, useEffect, useRef } from "react";
 import { format } from "date-fns";
 
-const Timer = () => {
+const Timer = ({ isRunning, setIsRunning }:{isRunning: boolean, setIsRunning:(v:boolean) => void}) => {
   const date = new Date();
   const formattedDate = format(date, "EEEE, MMMM d");
   const [seconds, setSeconds] = useState(0);
-  const [isRunning, setIsRunning] = useState(false);
+  // const [isRunning, setIsRunning] = useState(false);
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
 
   // Format seconds to HH:MM:SS
@@ -42,29 +42,25 @@ const Timer = () => {
     };
   }, []);
   return (
-    <div className="bg-[#2e4e71] shadow-md p-6 rounded-lg text-center w-full max-w-md min-w-sm mx-auto">
-      <h4 className="text-xl text-muted-foreground font-semibold mb-4">
+    <div
+      className="bg-[#2e4e71] shadow-md p-6 rounded-2xl text-center w-full max-w-md mx-auto font-sans border border-gray-200"
+      style={{ fontFamily: "Inter, system-ui, sans-serif" }}
+    >
+      <h4 className="text-lg text-white font-normal mb-6 text-left">
         {formattedDate}
       </h4>
-      <div className="text-5xl text-white font-mono my-8">
+      <div className="text-5xl text-white font-mono font-bold my-10 tracking-widest">
         {formatTime(seconds)}
       </div>
-
-      {!isRunning ? (
-        <button
-          onClick={startTimer}
-          className="bg-blue-600 cursor-pointer text-white px-4 py-2 rounded w-full hover:bg-blue-800 transition-colors"
-        >
-          Start
-        </button>
-      ) : (
-        <button
-          onClick={pauseTimer}
-          className="bg-yellow-500 cursor-pointer text-white px-4 py-2 rounded w-full hover:bg-yellow-600 transition-colors"
-        >
-          Pause
-        </button>
-      )}
+      <button
+        onClick={isRunning ? pauseTimer : startTimer}
+        className={`${
+          isRunning ? "bg-yellow-400" : "bg-[#2563eb]"
+        } text-white text-xl font-medium rounded-xl w-full py-4 mt-6 transition-colors hover:bg-blue-700 focus:outline-none`}
+        style={{ boxShadow: "0 2px 8px 0 rgba(37,99,235,0.10)" }}
+      >
+        {isRunning ? "Pause" : "Start"}
+      </button>
     </div>
   );
 };
