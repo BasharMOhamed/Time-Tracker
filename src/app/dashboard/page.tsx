@@ -5,6 +5,7 @@ import React, { useState } from "react";
 import { DataTableDemo } from "../projects/data-table";
 // import StatsCard from "@/components/statsCard";
 import RemainingCard from "@/components/RemainingCard";
+import { DialogDemo } from "@/components/AddProjectbtn";
 
 // const metadata: Metadata = {
 //   title: "Dashboard - Time Tracker",
@@ -15,8 +16,9 @@ const Dashboard = () => {
   const [isRunning, setIsRunning] = useState(false);
   return (
     <>
-      <header>
+      <header className="flex items-center justify-between mb-6">
         <h1 className="text-3xl mb-6 text-black">Dashboard</h1>
+        <DialogDemo />
       </header>
       <div className="grid grid-cols-[auto_1fr] gap-6">
         <Timer isRunning={isRunning} setIsRunning={setIsRunning} />

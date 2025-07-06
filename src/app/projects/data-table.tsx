@@ -33,6 +33,7 @@ import { columns } from "@/app/projects/columns";
 type Project = {
   id: string;
   clientName: string;
+  projectName: string;
   hourlyRate: number;
   duration: number;
   startDate: Date;
@@ -42,6 +43,7 @@ export const projects: Project[] = [
   {
     id: "p1",
     clientName: "Acme Corp",
+    projectName: "Project Alpha",
     hourlyRate: 50,
     duration: 50000,
     startDate: new Date("2025-01-15"),
@@ -49,6 +51,7 @@ export const projects: Project[] = [
   {
     id: "p2",
     clientName: "Globex Inc",
+    projectName: "Project Beta",
     hourlyRate: 60,
     duration: 6156,
     startDate: new Date("2025-02-01"),
@@ -56,6 +59,7 @@ export const projects: Project[] = [
   {
     id: "p3",
     clientName: "Wayne Enterprises",
+    projectName: "Project Gamma",
     hourlyRate: 75,
     duration: 189145,
     startDate: new Date("2025-03-10"),
@@ -63,6 +67,7 @@ export const projects: Project[] = [
   {
     id: "p4",
     clientName: "Stark Industries",
+    projectName: "Project Delta",
     hourlyRate: 90,
     duration: 1615161,
     startDate: new Date("2025-04-05"),
@@ -70,6 +75,7 @@ export const projects: Project[] = [
   {
     id: "p5",
     clientName: "Umbrella Corp",
+    projectName: "Project Epsilon",
     hourlyRate: 40,
     duration: 654849,
     startDate: new Date("2025-05-20"),
@@ -77,6 +83,7 @@ export const projects: Project[] = [
   {
     id: "p6",
     clientName: "Initech",
+    projectName: "Project Zeta",
     hourlyRate: 55,
     duration: 56198198,
     startDate: new Date("2025-06-18"),

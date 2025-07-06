@@ -2,7 +2,13 @@
 import React, { useState, useEffect, useRef } from "react";
 import { format } from "date-fns";
 
-const Timer = ({ isRunning, setIsRunning }:{isRunning: boolean, setIsRunning:(v:boolean) => void}) => {
+const Timer = ({
+  isRunning,
+  setIsRunning,
+}: {
+  isRunning: boolean;
+  setIsRunning: (v: boolean) => void;
+}) => {
   const date = new Date();
   const formattedDate = format(date, "EEEE, MMMM d");
   const [seconds, setSeconds] = useState(0);
@@ -55,7 +61,7 @@ const Timer = ({ isRunning, setIsRunning }:{isRunning: boolean, setIsRunning:(v:
       <button
         onClick={isRunning ? pauseTimer : startTimer}
         className={`${
-          isRunning ? "bg-yellow-400" : "bg-[#2563eb]"
+          isRunning ? "bg-yellow-400" : "bg-blue-600 hover:bg-blue-700"
         } text-white text-xl font-medium rounded-xl w-full py-4 mt-6 transition-colors hover:bg-blue-700 focus:outline-none`}
         style={{ boxShadow: "0 2px 8px 0 rgba(37,99,235,0.10)" }}
       >

@@ -14,7 +14,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 export type Project = {
   id: string;
-  // ProjectName: string;
+  projectName: string;
   clientName: string;
   hourlyRate: number;
   duration: number;
@@ -51,12 +51,19 @@ export const columns: ColumnDef<Project>[] = [
     ),
   },
   {
+    accessorKey: "projectName",
+    header: "Project Name",
+    cell: ({ row }) => (
+      <div className="text-left capitalize">{row.getValue("projectName")}</div>
+    ),
+  },
+  {
     accessorKey: "hourlyRate",
     header: ({ column }) => {
       return (
         <Button
           variant="ghost"
-          className="w-full justify-center"
+          className="w-full justify-center cursor-pointer"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
           Hourly Rate
@@ -94,6 +101,31 @@ export const columns: ColumnDef<Project>[] = [
         dateStyle: "short",
       });
       return <div className="text-right font-medium">{formattedDate}</div>;
+    },
+  },
+  {
+    accessorKey: "earnedMoney",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          className="w-full justify-center cursor-pointer"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Earned Money
+          <ArrowUpDown className="ml-2" />
+        </Button>
+      );
+    },
+    cell: ({ row }) => {
+      const hourlyRate = Number(row.getValue("hourlyRate"));
+      const duration = Number(row.getValue("duration"));
+      const earnedMoney = (hourlyRate / 60) * (duration / 60);
+      const formatted = new Intl.NumberFormat("en-US", {
+        style: "currency",
+        currency: "USD",
+      }).format(earnedMoney);
+      return <div className="text-center lowercase">{formatted}</div>;
     },
   },
   {

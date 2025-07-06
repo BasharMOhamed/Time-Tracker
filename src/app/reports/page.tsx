@@ -4,6 +4,12 @@ import DateRangePicker from "@/components/ui/date-range-picker";
 import Example from "@/components/weeklyHoursChart";
 import React from "react";
 
+export const metadata = {
+  title: "Reports | Time Tracker",
+  description:
+    "Analyze your tracked hours, project activity, and generate reports.",
+};
+
 const Reports = () => {
   return (
     <>
@@ -16,7 +22,11 @@ const Reports = () => {
             <DateRangePicker />
           </div>
           <div className="flex-1">
-            <SelectDemo />
+            <SelectDemo
+              label="Projects"
+              list={["All Projects", "Project 1", "Project 2", "Project 3"]}
+              placeHolder="Select a Project"
+            />
           </div>
         </div>
         <div
