@@ -29,6 +29,15 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { columns } from "@/app/projects/columns";
+import jsPDF from "jspdf";
+import "jspdf-autotable";
+import autoTable from "jspdf-autotable";
+
+declare module "jspdf" {
+  interface jsPDF {
+    autoTable: (options: Record<string, unknown>) => jsPDF;
+  }
+}
 
 type Project = {
   id: string;
@@ -121,8 +130,66 @@ export function DataTableDemo() {
       pagination,
     },
   });
+
+  //////////////////////////////////////////////////////
+  // const rows = table.getRowModel().rows.map((row) => row.original);
+  const rows = projects;
+
+  const handleExportPDF = () => {
+    const doc = new jsPDF();
+    doc.text("Projects Report", 14, 16);
+
+    // Define columns for PDF
+    const columns = [
+      { header: "Client Name", dataKey: "clientName" },
+      { header: "Project Name", dataKey: "projectName" },
+      { header: "Hourly Rate", dataKey: "hourlyRate" },
+      { header: "Duration", dataKey: "duration" },
+      { header: "Start Date", dataKey: "startDate" },
+      { header: "Earned Money", dataKey: "earnedMoney" },
+    ];
+
+    // Format data for PDF
+    const data = rows.map((row) => ({
+      ...row,
+      startDate: new Date(row.startDate).toLocaleDateString(),
+      duration: (() => {
+        const seconds = Number(row.duration);
+        const hours = Math.floor(seconds / 3600);
+        const minutes = Math.floor((seconds % 3600) / 60);
+        return `${hours.toString().padStart(2, "0")}:${minutes
+          .toString()
+          .padStart(2, "0")}`;
+      })(),
+      earnedMoney: new Intl.NumberFormat("en-US", {
+        style: "currency",
+        currency: "USD",
+      }).format((row.hourlyRate / 60) * (row.duration / 60)),
+    }));
+
+    // Add table to PDF
+    autoTable(doc, {
+      columns,
+      body: data,
+      startY: 24,
+      headStyles: { fillColor: [30, 64, 175] }, // blue header
+      styles: { fontSize: 10 },
+    });
+    console.log("PDF generated with data:", data);
+    doc.save("projects-report.pdf");
+  };
+
   return (
     <div className="w-full">
+      <div className="flex justify-end mb-2">
+        {/* <button
+          onClick={handleExportPDF}
+          className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition"
+        >
+          Export as PDF
+        </button> */}
+        <Button onClick={handleExportPDF}>Export as PDF</Button>
+      </div>
       <div className="flex items-center py-4">
         <Input
           placeholder="Filter Projects..."

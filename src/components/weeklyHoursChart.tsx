@@ -2,7 +2,7 @@
 import React, { PureComponent } from "react";
 import { BarChart, Bar, XAxis, YAxis, ResponsiveContainer } from "recharts";
 
-const data = [
+export const data = [
   { name: "Mon", hours: 8 },
   { name: "Tue", hours: 7 },
   { name: "Wed", hours: 9 },

@@ -1,9 +1,9 @@
 "use client";
 import Link from "next/link";
-
 import { usePathname } from "next/navigation";
-import { Clock, Folder, BarChart2, Settings } from "lucide-react";
+import { Clock, Folder, BarChart2, Settings, Menu } from "lucide-react";
 import clsx from "clsx";
+import React, { useState } from "react";
 
 const navItems = [
   { name: "Time Log", href: "/dashboard", icon: Clock },
@@ -11,27 +11,69 @@ const navItems = [
   { name: "Reports", href: "/reports", icon: BarChart2 },
   { name: "Settings", href: "/settings", icon: Settings },
 ];
+
 const SideBar = () => {
   const pathname = usePathname();
+  const [open, setOpen] = useState(false);
+
   return (
-    <aside className="w-64 min-h-screen bg-[#153055] text-white p-4">
-      <div className="text-xl font-bold mb-6">🕒 TimeTrack</div>
-      <nav className="flex flex-col gap-2">
-        {navItems.map(({ name, href, icon: Icon }) => (
-          <Link
-            key={name}
-            href={href}
-            className={clsx(
-              "flex items-center gap-3 px-3 py-2 rounded-md hover:bg-[#2e4e71] transition-colors",
-              pathname === href && "bg-[#2e4e71]"
-            )}
+    <>
+      {/* Mobile menu button */}
+      {!open && (
+        <button
+          className="md:hidden fixed top-4 left-4 z-50 bg-[#153055] p-2 rounded-md"
+          onClick={() => setOpen(true)}
+          aria-label="Open sidebar"
+        >
+          <Menu className="text-white" />
+        </button>
+      )}
+
+      {/* Sidebar for desktop and mobile drawer */}
+      <aside
+        className={clsx(
+          "fixed md:static top-0 left-0 md:h-screen h-full w-64 bg-[#153055] text-white p-4 z-40 transition-transform duration-300",
+          open ? "translate-x-0" : "-translate-x-full",
+          "md:translate-x-0 md:block"
+        )}
+      >
+        {/* Close button on mobile */}
+        <div className="flex items-center justify-between mb-6">
+          <div className="text-xl font-bold">🕒 TimeTrack</div>
+          <button
+            className="md:hidden text-white"
+            onClick={() => setOpen(false)}
+            aria-label="Close sidebar"
           >
-            <Icon className="h-5 w-5" />
-            <span>{name}</span>
-          </Link>
-        ))}
-      </nav>
-    </aside>
+            ✕
+          </button>
+        </div>
+        <nav className="flex flex-col gap-2">
+          {navItems.map(({ name, href, icon: Icon }) => (
+            <Link
+              key={name}
+              href={href}
+              className={clsx(
+                "flex items-center gap-3 px-3 py-2 rounded-md hover:bg-[#2e4e71] transition-colors",
+                pathname === href && "bg-[#2e4e71]"
+              )}
+              onClick={() => setOpen(false)} // close on mobile nav click
+            >
+              <Icon className="h-5 w-5" />
+              <span>{name}</span>
+            </Link>
+          ))}
+        </nav>
+      </aside>
+
+      {/* Overlay for mobile drawer */}
+      {open && (
+        <div
+          className="fixed inset-0 bg-black/40 z-30 md:hidden"
+          onClick={() => setOpen(false)}
+        />
+      )}
+    </>
   );
 };
 
