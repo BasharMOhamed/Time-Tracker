@@ -4,6 +4,7 @@ import { usePathname } from "next/navigation";
 import { Clock, Folder, BarChart2, Settings, Menu } from "lucide-react";
 import clsx from "clsx";
 import React, { useState } from "react";
+import { useSession } from "next-auth/react";
 
 const navItems = [
   { name: "Time Log", href: "/dashboard", icon: Clock },
@@ -13,6 +14,7 @@ const navItems = [
 ];
 
 const SideBar = () => {
+  const { data: session, status } = useSession();
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
 
@@ -49,20 +51,46 @@ const SideBar = () => {
           </button>
         </div>
         <nav className="flex flex-col gap-2">
-          {navItems.map(({ name, href, icon: Icon }) => (
-            <Link
-              key={name}
-              href={href}
-              className={clsx(
-                "flex items-center gap-3 px-3 py-2 rounded-md hover:bg-[#2e4e71] transition-colors",
-                pathname === href && "bg-[#2e4e71]"
-              )}
-              onClick={() => setOpen(false)} // close on mobile nav click
-            >
-              <Icon className="h-5 w-5" />
-              <span>{name}</span>
-            </Link>
-          ))}
+          {session &&
+            navItems.map(({ name, href, icon: Icon }) => (
+              <Link
+                key={name}
+                href={href}
+                className={clsx(
+                  "flex items-center gap-3 px-3 py-2 rounded-md hover:bg-[#2e4e71] transition-colors",
+                  pathname === href && "bg-[#2e4e71]"
+                )}
+                onClick={() => setOpen(false)} // close on mobile nav click
+              >
+                <Icon className="h-5 w-5" />
+                <span>{name}</span>
+              </Link>
+            ))}
+          {!session && (
+            <>
+              <Link
+                key={"Login"}
+                href={"/sign-in"}
+                className={clsx(
+                  "flex items-center gap-3 px-3 py-2 rounded-md hover:bg-[#2e4e71] transition-colors",
+                  pathname === "/sign-in" && "bg-[#2e4e71]"
+                )}
+              >
+                <span>Login</span>
+              </Link>
+              <Link
+                key={"Register"}
+                href={"/sign-up"}
+                className={clsx(
+                  "flex items-center gap-3 px-3 py-2 rounded-md hover:bg-[#2e4e71] transition-colors",
+                  pathname === "/sign-up" && "bg-[#2e4e71]"
+                )}
+                onClick={() => setOpen(false)} // close on mobile nav click
+              >
+                <span>Register</span>
+              </Link>
+            </>
+          )}
         </nav>
       </aside>
 
@@ -73,8 +101,7 @@ const SideBar = () => {
           onClick={() => setOpen(false)}
         />
       )}
-    </>
-  );
+    </>)
 };
 
 export default SideBar;

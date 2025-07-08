@@ -1,3 +1,4 @@
+"use client";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -11,16 +12,20 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { SelectDemo } from "./projectSelect";
-
+// import { SelectDemo } from "./projectSelect";
+import { CreateProject } from "@/app/projects/_actions/project.js"; // Adjust the import path as needed
+// import { useFormState } from "react-dom";
+import { useActionState } from "react";
 export function DialogDemo() {
+  const [states, actionState] = useActionState(CreateProject, {});
+  // const [state, formAction] = useFormState(CreateProject, {});
   return (
     <Dialog>
-      <form>
-        <DialogTrigger asChild>
-          <Button variant="outline">Add Project</Button>
-        </DialogTrigger>
-        <DialogContent className="sm:max-w-[425px]">
+      <DialogTrigger asChild>
+        <Button variant="outline">Add Project</Button>
+      </DialogTrigger>
+      <DialogContent className="sm:max-w-[425px]">
+        <form action={actionState}>
           <DialogHeader>
             <DialogTitle>Add New Project</DialogTitle>
             <DialogDescription>
@@ -30,51 +35,59 @@ export function DialogDemo() {
           </DialogHeader>
           <div className="grid gap-4">
             <div className="grid gap-3">
-              <Label htmlFor="name-1">Client Name</Label>
-              <Input id="name-1" name="name" placeholder="Pedro Duarte" />
+              <Label htmlFor="clientName">Client Name</Label>
+              <Input
+                id="clientName"
+                name="clientName"
+                placeholder="Pedro Duarte"
+              />
             </div>
             <div className="grid gap-3">
-              <Label htmlFor="project-name">Project Name</Label>
+              <Label htmlFor="projectName">Project Name</Label>
               <Input
-                id="project-name"
-                name="project-name"
-                // defaultValue="Marketing campaign"
+                id="projectName"
+                name="projectName"
                 placeholder="Marketing campaign"
               />
             </div>
-            {/* <div className="grid gap-3">
-              <Label htmlFor="hourly-rate">Hourly Rate</Label>
-              <Input
-                id="hourly-rate"
-                name="hourly-rate"
-                type="number"
-                placeholder="15"
-              />
-            </div> */}
             <div className="grid grid-cols-2 gap-3">
-              <Label htmlFor="hourly-rate">Hourly Rate</Label>
+              <Label htmlFor="hourlyRate">Hourly Rate</Label>
               <Label htmlFor="interval">Interval</Label>
               <Input
-                id="hourly-rate"
-                name="hourly-rate"
+                id="hourlyRate"
+                name="hourlyRate"
                 type="number"
                 placeholder="15"
               />
-              <SelectDemo
-                label="Interval"
-                placeHolder="Select an Interval"
-                list={["Weekly", "Daily"]}
-              />
+              <select
+                id="interval"
+                name="interval"
+                className="border rounded-md px-2 py-1 text-sm"
+                defaultValue=""
+                required
+              >
+                <option value="" disabled>
+                  Select an interval
+                </option>
+                <option value="Weekly">Weekly</option>
+                <option value="Daily">Daily</option>
+              </select>
             </div>
           </div>
           <DialogFooter>
             <DialogClose asChild>
               <Button variant="outline">Cancel</Button>
             </DialogClose>
-            <Button type="submit">Add</Button>
+            <Button
+              type="submit"
+              onClick={() => console.log("Clicked")}
+              className="cursor-pointer"
+            >
+              Add
+            </Button>
           </DialogFooter>
-        </DialogContent>
-      </form>
+        </form>
+      </DialogContent>
     </Dialog>
   );
 }
