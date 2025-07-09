@@ -1,6 +1,7 @@
 import CredentialsProvider from "next-auth/providers/credentials";
 import dbConnect from "./dbConnect";
 import User from "@/models/user.model.js";
+import bcrypt from "bcrypt";
 
 export const authOptions = {
   providers: [
@@ -14,7 +15,11 @@ export const authOptions = {
         await dbConnect();
         const user = await User.findOne({ email: credentials.email });
         console.log("User found:", user);
-        if (user && credentials.password === user.password) {
+        const isPasswordValid = await bcrypt.compare(
+          credentials.password,
+          user.password
+        );
+        if (isPasswordValid) {
           return { id: user._id.toString(), email: user.email };
         }
 
@@ -29,7 +34,7 @@ export const authOptions = {
     },
   },
   pages: {
-    signIn: "/login",
+    signIn: "/dashboard",
   },
   session: {
     strategy: "jwt",

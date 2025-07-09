@@ -51,7 +51,7 @@ const SideBar = () => {
           </button>
         </div>
         <nav className="flex flex-col gap-2">
-          {session &&
+          {status === "authenticated" &&
             navItems.map(({ name, href, icon: Icon }) => (
               <Link
                 key={name}
@@ -66,7 +66,7 @@ const SideBar = () => {
                 <span>{name}</span>
               </Link>
             ))}
-          {!session && (
+          {status === "unauthenticated" && (
             <>
               <Link
                 key={"Login"}
@@ -101,7 +101,8 @@ const SideBar = () => {
           onClick={() => setOpen(false)}
         />
       )}
-    </>)
+    </>
+  );
 };
 
 export default SideBar;
