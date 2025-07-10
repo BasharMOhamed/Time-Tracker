@@ -12,10 +12,8 @@ const Timer = ({
   const date = new Date();
   const formattedDate = format(date, "EEEE, MMMM d");
   const [seconds, setSeconds] = useState(0);
-  // const [isRunning, setIsRunning] = useState(false);
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
 
-  // Format seconds to HH:MM:SS
   const formatTime = (s: number) => {
     const hrs = String(Math.floor(s / 3600)).padStart(2, "0");
     const mins = String(Math.floor((s % 3600) / 60)).padStart(2, "0");

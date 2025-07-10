@@ -16,12 +16,13 @@ import { toast } from "react-hot-toast";
 
 export default function DateRangePicker({
   className,
-}: React.HTMLAttributes<HTMLDivElement>) {
-  const [date, setDate] = React.useState<DateRange | undefined>({
-    from: addDays(new Date(), -7),
-    to: new Date(),
-  });
-
+  setDate,
+  date,
+}: {
+  className?: string;
+  setDate: (date: DateRange | undefined) => void;
+  date: DateRange | undefined;
+}) {
   React.useEffect(() => {
     if (date?.from && date?.to && differenceInDays(date.to, date.from) > 7) {
       toast.error(
@@ -69,6 +70,7 @@ export default function DateRangePicker({
             selected={date}
             onSelect={setDate}
             numberOfMonths={2}
+            required={false}
           />
         </PopoverContent>
       </Popover>

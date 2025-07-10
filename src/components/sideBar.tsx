@@ -15,7 +15,7 @@ const navItems = [
 ];
 
 const SideBar = () => {
-  const { data: session, status } = useSession();
+  const { status } = useSession();
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
 
@@ -52,7 +52,7 @@ const SideBar = () => {
           </button>
         </div>
         <nav className="flex flex-col gap-2">
-          {status === "authenticated" &&
+          {/* {status === "authenticated" &&
             navItems.map(({ name, href, icon: Icon }) => (
               <Link
                 key={name}
@@ -66,7 +66,33 @@ const SideBar = () => {
                 <Icon className="h-5 w-5" />
                 <span>{name}</span>
               </Link>
-            ))}
+            ))} */}
+          {status === "authenticated" && (
+            <>
+              {navItems.map(({ name, href, icon: Icon }) => (
+                <Link
+                  key={name}
+                  href={href}
+                  className={clsx(
+                    "flex items-center gap-3 px-3 py-2 rounded-md hover:bg-[#2e4e71] transition-colors",
+                    pathname === href && "bg-[#2e4e71]"
+                  )}
+                  onClick={() => setOpen(false)}
+                >
+                  <Icon className="h-5 w-5" />
+                  <span>{name}</span>
+                </Link>
+              ))}
+              <Button
+                className="flex items-center gap-3 px-3 py-2 rounded-md hover:bg-red-600 transition-colors mt-4"
+                onClick={() => signOut()}
+                variant="ghost"
+              >
+                <LogOut className="h-5 w-5" />
+                <span>Sign Out</span>
+              </Button>
+            </>
+          )}
           {status === "unauthenticated" && (
             <>
               <Link
