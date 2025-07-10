@@ -48,62 +48,69 @@ type Project = {
   startDate: Date;
 };
 
-export const projects: Project[] = [
-  {
-    id: "p1",
-    clientName: "Acme Corp",
-    projectName: "Project Alpha",
-    hourlyRate: 50,
-    duration: 50000,
-    startDate: new Date("2025-01-15"),
-  },
-  {
-    id: "p2",
-    clientName: "Globex Inc",
-    projectName: "Project Beta",
-    hourlyRate: 60,
-    duration: 6156,
-    startDate: new Date("2025-02-01"),
-  },
-  {
-    id: "p3",
-    clientName: "Wayne Enterprises",
-    projectName: "Project Gamma",
-    hourlyRate: 75,
-    duration: 189145,
-    startDate: new Date("2025-03-10"),
-  },
-  {
-    id: "p4",
-    clientName: "Stark Industries",
-    projectName: "Project Delta",
-    hourlyRate: 90,
-    duration: 1615161,
-    startDate: new Date("2025-04-05"),
-  },
-  {
-    id: "p5",
-    clientName: "Umbrella Corp",
-    projectName: "Project Epsilon",
-    hourlyRate: 40,
-    duration: 654849,
-    startDate: new Date("2025-05-20"),
-  },
-  {
-    id: "p6",
-    clientName: "Initech",
-    projectName: "Project Zeta",
-    hourlyRate: 55,
-    duration: 56198198,
-    startDate: new Date("2025-06-18"),
-  },
-];
-export function DataTableDemo() {
+// export const projects: Project[] = [
+//   {
+//     id: "p1",
+//     clientName: "Acme Corp",
+//     projectName: "Project Alpha",
+//     hourlyRate: 50,
+//     duration: 50000,
+//     startDate: new Date("2025-01-15"),
+//   },
+//   {
+//     id: "p2",
+//     clientName: "Globex Inc",
+//     projectName: "Project Beta",
+//     hourlyRate: 60,
+//     duration: 6156,
+//     startDate: new Date("2025-02-01"),
+//   },
+//   {
+//     id: "p3",
+//     clientName: "Wayne Enterprises",
+//     projectName: "Project Gamma",
+//     hourlyRate: 75,
+//     duration: 189145,
+//     startDate: new Date("2025-03-10"),
+//   },
+//   {
+//     id: "p4",
+//     clientName: "Stark Industries",
+//     projectName: "Project Delta",
+//     hourlyRate: 90,
+//     duration: 1615161,
+//     startDate: new Date("2025-04-05"),
+//   },
+//   {
+//     id: "p5",
+//     clientName: "Umbrella Corp",
+//     projectName: "Project Epsilon",
+//     hourlyRate: 40,
+//     duration: 654849,
+//     startDate: new Date("2025-05-20"),
+//   },
+//   {
+//     id: "p6",
+//     clientName: "Initech",
+//     projectName: "Project Zeta",
+//     hourlyRate: 55,
+//     duration: 56198198,
+//     startDate: new Date("2025-06-18"),
+//   },
+// ];
+export function DataTableDemo({
+  projects,
+  fetching,
+}: {
+  projects: Project[];
+  fetching: boolean;
+}) {
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [pagination, setPagination] = React.useState({
     pageIndex: 0,
     pageSize: 5,
   });
+
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     []
   );
@@ -178,6 +185,14 @@ export function DataTableDemo() {
     console.log("PDF generated with data:", data);
     doc.save("projects-report.pdf");
   };
+
+  if (fetching) {
+    return (
+      <div className="w-full flex justify-center items-center">
+        Loading projects...
+      </div>
+    );
+  }
 
   return (
     <div className="w-full">

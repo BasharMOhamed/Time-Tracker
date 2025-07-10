@@ -8,10 +8,11 @@ import {
 } from "@/components/ui/popover";
 import { cn } from "@/lib/utils";
 import { Calendar } from "@/components/ui/calendar";
-import { addDays, format } from "date-fns";
+import { addDays, format, differenceInDays } from "date-fns";
 import { CalendarIcon } from "lucide-react";
 import * as React from "react";
 import { type DateRange } from "react-day-picker";
+import { toast } from "react-hot-toast";
 
 export default function DateRangePicker({
   className,
@@ -20,6 +21,18 @@ export default function DateRangePicker({
     from: addDays(new Date(), -7),
     to: new Date(),
   });
+
+  React.useEffect(() => {
+    if (date?.from && date?.to && differenceInDays(date.to, date.from) > 7) {
+      toast.error(
+        `The selected date range is too big. Max allows range is 90 days`
+      );
+      setDate({
+        from: addDays(new Date(), -7),
+        to: new Date(),
+      });
+    }
+  }, [date]);
 
   return (
     <div className={cn("grid gap-2", className)}>

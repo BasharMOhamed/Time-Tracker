@@ -16,6 +16,8 @@ import html2canvas from "html2canvas";
 // };
 
 const Reports = () => {
+  
+
   const chartRef = useRef<HTMLDivElement>(null);
 
   const handleExportPDF = async () => {

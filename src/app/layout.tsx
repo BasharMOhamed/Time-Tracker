@@ -4,7 +4,7 @@
 import "./globals.css";
 import SideBar from "@/components/sideBar";
 import { SessionProvider } from "next-auth/react";
-
+import { Toaster } from "react-hot-toast";
 // const geistSans = Geist({
 //   variable: "--font-geist-sans",
 //   subsets: ["latin"],
@@ -33,6 +33,7 @@ export default function RootLayout({
           antialiased flex`}
       >
         <SessionProvider>
+          <Toaster position="top-right" />
           <SideBar />
         </SessionProvider>
         <main className="flex-1 p-6 bg-gray-50 min-h-screen">{children}</main>

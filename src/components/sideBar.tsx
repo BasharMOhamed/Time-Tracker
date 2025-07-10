@@ -1,10 +1,11 @@
 "use client";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Clock, Folder, BarChart2, Settings, Menu } from "lucide-react";
+import { Clock, Folder, BarChart2, Settings, Menu, LogOut } from "lucide-react";
 import clsx from "clsx";
 import React, { useState } from "react";
-import { useSession } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
+import { Button } from "./ui/button";
 
 const navItems = [
   { name: "Time Log", href: "/dashboard", icon: Clock },
